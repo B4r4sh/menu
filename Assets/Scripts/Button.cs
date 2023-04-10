@@ -6,24 +6,29 @@ using UnityEngine.EventSystems;
 public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private Animator _buttonAnimation;
+    private int _animationHighlightedHash;
+    private int _animationPressedHash;
 
-    void Start()
+    private void Start()
     {
         _buttonAnimation = GetComponent<Animator>();
+        _animationHighlightedHash = Animator.StringToHash("isHighlighted");
+        _animationPressedHash = Animator.StringToHash("isPressed");
+
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        _buttonAnimation.SetBool("isHighlighted", true);
+        _buttonAnimation.SetBool(_animationHighlightedHash, true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _buttonAnimation.SetBool("isHighlighted", false);
+        _buttonAnimation.SetBool(_animationHighlightedHash, false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _buttonAnimation.SetTrigger("isPressed");
+        _buttonAnimation.SetTrigger(_animationPressedHash);
     }  
 }
